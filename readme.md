@@ -40,10 +40,11 @@ feign.client.config.default.readTimeout=10000
 # URLs externas
 # ==========================
 dummyjson.base-url=https://dummyjson.com
+```
 
 3. Ejecutar con Maven
    ```bash
-   ./mvnw spring-boot:run
+   ./mvn spring-boot:run
    ```
 
 4. El servicio estará disponible en `http://localhost:8080/api/auth/login`
@@ -85,11 +86,11 @@ Si el login es exitoso este es un ejemplo Respuesta esperada:
 
 Actualmente los registros de login exitoso en la tabla  `login_log` de la base de datos `dummyauth` de Postgresql:
 
-- Campos almacenados:
-   id (uuid)
-   username
-   login_time
-   access_token
-   refresh_token
+**Campos almacenados:**  
+- id (uuid)  
+- username  
+- login_time  
+- access_token  
+- refresh_token
 
-- El archivo para la creacion de la base de datos se llama dummyauth.sql y esta dentro de la carpeta db
+**El archivo para la creacion de la base de datos se llama dummyauth.sql y esta dentro de la carpeta db**
