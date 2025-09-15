@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MeResponseDto {
     private int id;
+    private String firstName;
+    private String lastName;
     private String username;
     private String email;
 }

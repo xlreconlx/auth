@@ -16,5 +16,5 @@ import org.springframework.web.bind.annotation.RequestHeader;
 @FeignClient(name = "dummy-user", url = "${dummyjson.base-url}")
 public interface UserClient {
     @GetMapping("/auth/me")
-    MeResponseDto me(@RequestHeader("Cookie") String cookie);
+    MeResponseDto me(@RequestHeader("Authorization") String bearerToken);
 }

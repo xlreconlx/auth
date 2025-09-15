@@ -5,6 +5,7 @@
 package com.prueba.spring_dummyjson.auth.feign;
 
 import com.prueba.spring_dummyjson.auth.dto.LoginRequestDto;
+import com.prueba.spring_dummyjson.auth.dto.LoginResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,5 +18,5 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient(name = "dummy-auth", url = "${dummyjson.base-url}")
 public interface AuthClient {
     @PostMapping(value = "/auth/login")
-    ResponseEntity<UserClient> login(@RequestBody LoginRequestDto request);
+    ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto request);
 }

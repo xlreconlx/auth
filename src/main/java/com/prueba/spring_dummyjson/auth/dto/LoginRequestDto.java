@@ -4,6 +4,7 @@
  */
 package com.prueba.spring_dummyjson.auth.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginRequestDto {
+    @NotBlank(message = "El username es obligatorio")
     private String username;
+    @NotBlank(message = "El password es obligatorio")
     private String password;
 }

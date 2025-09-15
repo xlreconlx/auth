@@ -2,6 +2,7 @@ package com.prueba.spring_dummyjson.auth.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,12 +14,15 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class LoginLog {
     @Id
     @GeneratedValue
     private UUID id;
     private String username;
     private OffsetDateTime loginTime;
+    @Column(length = 2048)
     private String accessToken;
+    @Column(length = 2048)
     private String refreshToken;
 }
