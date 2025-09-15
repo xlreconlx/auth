@@ -27,15 +27,38 @@ public class GlobalExceptionHandler {
 
         log.error("Feign error al consumir API externa. Status: {}, Body: {}", status, responseBody, ex);
 
-        if (status == HttpStatus.BAD_REQUEST) {
+        // Detectar el caso de token invalido / invalid signature
+        if (responseBody != null && responseBody.contains("invalid signature")) {
             return ResponseEntity
                     .status(HttpStatus.UNAUTHORIZED)
-                    .body(responseBody != null ? responseBody : "Credenciales invalidas");
+                    .body("Token invalido o expirado. Por favor autenticarse nuevamente.");
+        }
+
+        if (null != status) switch (status) {
+            case BAD_REQUEST, UNAUTHORIZED -> {
+                return ResponseEntity
+                        .status(HttpStatus.UNAUTHORIZED)
+                        .body(responseBody != null ? responseBody : "Credenciales invalidas o token invalido");
+            }
+            case INTERNAL_SERVER_ERROR -> {
+                return ResponseEntity
+                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body(responseBody != null ? "Error interno del servicio externo: " + responseBody
+                                : "Error interno del servicio externo");
+            }
+            case NOT_FOUND -> {
+                return ResponseEntity
+                        .status(HttpStatus.NOT_FOUND)
+                        .body("Recurso no encontrado en el servicio externo");
+            }
+            default -> {
+            }
         }
 
         return ResponseEntity
                 .status(status)
                 .body("Error al consumir API externa: " + (responseBody != null ? responseBody : "sin detalle"));
+
     }
 
     @ExceptionHandler(RuntimeException.class)

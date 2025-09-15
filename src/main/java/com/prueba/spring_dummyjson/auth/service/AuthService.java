@@ -41,16 +41,25 @@ public class AuthService {
         LoginResponseDto loginResponse = response.getBody();
         log.debug("Respuesta de login recibida: {}", loginResponse);
 
-        if (loginResponse.getAccessToken() != null) {
-            Optional<MeResponseDto> meOptional = Optional.empty();
-                String bearerToken = "Bearer " + loginResponse.getAccessToken();
-                log.info("Consultando /auth/me con token para usuario: {}", username);
-                meOptional = Optional.ofNullable(userClient.me(bearerToken));
+        List<String> cookies = response.getHeaders().get("Set-Cookie");
+        String accessTokenCookie = null;
+        if (cookies != null) {
+            accessTokenCookie = cookies.stream()
+                    .filter(c -> c.startsWith("accessToken"))
+                    .findFirst().orElse(null);
+        }
+ 
 
-                meOptional.ifPresentOrElse(
-                        me -> log.info("Respuesta de /auth/me: {}", me),
-                        () -> log.warn("El endpoint /auth/me no devolvio informacion para el usuario: {}", username)
-                );
+        if (accessTokenCookie != null) {
+            Optional<MeResponseDto> meOptional = Optional.empty();
+            String bearerToken = "Bearer " + loginResponse.getAccessToken();
+            log.info("Consultando /auth/me con token para usuario: {}", accessTokenCookie);
+            meOptional = Optional.ofNullable(userClient.me(bearerToken));
+
+            meOptional.ifPresentOrElse(
+                    me -> log.info("Respuesta de /auth/me: {}", me),
+                    () -> log.warn("El endpoint /auth/me no devolvio informacion para el usuario: {}", username)
+            );
         }
 
         LoginLog logEntity = LoginLog.builder()
