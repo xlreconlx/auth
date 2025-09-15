@@ -5,6 +5,7 @@
 package com.prueba.spring_dummyjson.auth.feign;
 
 import com.prueba.spring_dummyjson.auth.dto.MeResponseDto;
+import com.prueba.spring_dummyjson.auth.dto.UserResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -17,4 +18,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public interface UserClient {
     @GetMapping("/auth/me")
     MeResponseDto me(@RequestHeader("Authorization") String bearerToken);
+
+    @GetMapping("/users")
+    UserResponseDto users();
 }

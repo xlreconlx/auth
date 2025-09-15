@@ -5,6 +5,7 @@
 package com.prueba.spring_dummyjson.auth.service;
 
 import com.prueba.spring_dummyjson.auth.dto.MeResponseDto;
+import com.prueba.spring_dummyjson.auth.dto.UserResponseDto;
 import com.prueba.spring_dummyjson.auth.feign.UserClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,5 +24,10 @@ public class UserService {
     public MeResponseDto getAuthenticatedUser(String accessToken) {
         log.info("Consultando /auth/me con token: {}", accessToken);
         return userClient.me(accessToken);
+    }
+
+    public UserResponseDto getAllUsers() {
+        log.info("Consultando /users");
+        return userClient.users();
     }
 }
